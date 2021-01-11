@@ -1,4 +1,3 @@
-import std/unittest
 import std/asyncdispatch
 import pkg/asynctest
 
@@ -8,14 +7,14 @@ proc someAsyncProc {.async.} =
 
 suite "test async proc":
 
-  asyncsetup:
+  setup:
     # invoke await in the test setup:
     await someAsyncProc()
 
-  asyncteardown:
+  teardown:
     # invoke await in the test teardown:
     await someAsyncProc()
 
-  asynctest "async test":
+  test "async test":
     # invoke await in tests:
     await someAsyncProc()
