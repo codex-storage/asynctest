@@ -2,15 +2,20 @@ import std/unittest
 import std/asyncdispatch
 import pkg/asynctest
 
-suite "async tests":
+proc someAsyncProc {.async.} =
+  # perform some async operations using await
+  discard
 
-  proc asyncproc {.async.} = discard
+suite "test async proc":
 
-  asyncsetup: # allows await in setup
-    await asyncproc()
+  asyncsetup:
+    # invoke await in the test setup:
+    await someAsyncProc()
 
-  asyncteardown: # allows await in teardown
-    await asyncproc()
+  asyncteardown:
+    # invoke await in the test teardown:
+    await someAsyncProc()
 
-  asynctest "allows await in tests":
-    await asyncproc()
+  asynctest "async test":
+    # invoke await in tests:
+    await someAsyncProc()
