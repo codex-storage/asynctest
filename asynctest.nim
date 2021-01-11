@@ -4,12 +4,12 @@ export unittest except suite, test
 template suite*(name, body) =
   suite name:
 
-    template setup(setupBody) =
+    template setup(setupBody) {.used.} =
       setup:
         let asyncproc = proc {.async.} = setupBody
         waitFor asyncproc()
 
-    template teardown(teardownBody) =
+    template teardown(teardownBody) {.used.} =
       teardown:
         let asyncproc = proc {.async.} = teardownBody
         waitFor asyncproc()
