@@ -1,6 +1,3 @@
-import std/asyncdispatch
-import pkg/asynctest
-
 proc someAsyncProc {.async.} =
   # perform some async operations using await
   discard

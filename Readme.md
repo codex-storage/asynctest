@@ -47,5 +47,12 @@ suite "test async proc":
 
 ```
 
+Unittest2
+---------
+
+The [unittest2][3] package is supported. Make sure that you
+`import asynctest/unittest2` instead of the normal import.
+
 [1]: https://nim-lang.org/docs/unittest.html
 [2]: https://github.com/nim-lang/nimble
+[3]: https://github.com/status-im/nim-unittest2
