@@ -33,12 +33,20 @@ proc someAsyncProc {.async.} =
 
 suite "test async proc":
 
+  setupAll:
+    # invoke await in the suite setup:
+    await someAsyncProc()
+
+  teardownAll:
+    # invoke await in the suite teardown:
+    await someAsyncProc()
+
   setup:
-    # invoke await in the test setup:
+    # invoke await in each test setup:
     await someAsyncProc()
 
   teardown:
-    # invoke await in the test teardown:
+    # invoke await in each test teardown:
     await someAsyncProc()
 
   test "async test":
