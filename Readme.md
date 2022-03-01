@@ -33,14 +33,6 @@ proc someAsyncProc {.async.} =
 
 suite "test async proc":
 
-  setupAll:
-    # invoke await in the suite setup:
-    await someAsyncProc()
-
-  teardownAll:
-    # invoke await in the suite teardown:
-    await someAsyncProc()
-
   setup:
     # invoke await in each test setup:
     await someAsyncProc()
@@ -54,6 +46,17 @@ suite "test async proc":
     await someAsyncProc()
 
 ```
+
+setupAll and teardownAll
+------------------------
+
+The `setup` and `teardown` code runs before and after every test, just like the
+standard [unittest][1] module. In addition we provide `setupAll` and
+`teardownAll`. The `setupAll` code runs once before all tests in the suite, and
+the `teardownAll` runs once after all tests in the suite. Use these only as a
+last resort when setting up the test environment is very costly. Be careful that
+the tests do not modify the environment that you set up, lest you introduce
+dependencies between tests.
 
 Unittest2
 ---------

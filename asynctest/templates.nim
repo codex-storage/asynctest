@@ -2,12 +2,12 @@ template suite*(name, body) =
 
   suite name:
 
-    # Runs before all tests in the suite
+    ## Runs before all tests in the suite
     template setupAll(setupAllBody) {.used.} =
       let b = proc {.async.} = setupAllBody
       waitFor b()
 
-    # Runs after all tests in the suite
+    ## Runs after all tests in the suite
     template teardownAll(teardownAllBody) {.used.} =
       template teardownAllIMPL: untyped {.inject.} =
         let a = proc {.async.} = teardownAllBody
