@@ -58,6 +58,26 @@ last resort when setting up the test environment is very costly. Be careful that
 the tests do not modify the environment that you set up, lest you introduce
 dependencies between tests.
 
+check eventually
+----------------
+
+When you find yourself adding calls to `sleepAsync` to your tests, you might
+want to consider using `check eventually` instead. It will repeatedly check
+an expression until it becomes true. It has a built-in timeout of 5 seconds that
+you can override.
+
+```nim
+var x: int
+
+proc slowProcedure {.async.} =
+  # perform a slow operation
+  x = 42
+
+let future = slowProcedure()
+check eventually x == 42
+await future
+```
+
 Unittest2
 ---------
 
