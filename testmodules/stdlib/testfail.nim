@@ -1,4 +1,9 @@
-import std/exitprocs
+template tryImport(module) = import module
+when compiles tryImport std/exitprocs:
+  import std/exitprocs
+else:
+  template getProgramResult: auto = programResult
+  template setProgramResult(value) = programResult = value
 
 template silent(body) =
 
@@ -25,4 +30,5 @@ suite "reports unhandled exception when teardown handles exceptions too":
         discard
 
     test "should fail, but not crash":
-      raise newException(ValueError, "This exception is expected")
+      if true:
+        raise newException(ValueError, "This exception is expected")
