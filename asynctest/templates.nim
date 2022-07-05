@@ -20,8 +20,10 @@ template suite*(name, body) =
 
     template teardown(teardownBody) {.used.} =
       teardown:
+        let exception = getCurrentException()
         let asyncproc = proc {.async.} = teardownBody
         waitFor asyncproc()
+        setCurrentException(exception)
 
     let suiteproc = proc = # Avoids GcUnsafe2 warnings with chronos
       body
