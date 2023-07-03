@@ -1,4 +1,4 @@
-import std/times
+import std/times except milliseconds
 
 template eventually*(expression: untyped, timeout=5000): bool =
 
