@@ -11,7 +11,7 @@ Use the [Nimble][2] package manager to add asynctest to an existing project.
 Add the following to its .nimble file:
 
 ```nim
-requires "asynctest >= 0.4.0 & < 0.5.0"
+requires "asynctest >= 0.4.1 & < 0.5.0"
 ```
 
 Usage
