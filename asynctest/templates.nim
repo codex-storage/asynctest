@@ -11,7 +11,7 @@ template launderExceptions(body: typed) =
   except CatchableError as ex:
     raise ex
   except Exception as ex:
-    raise newException(CatchableError, ex.msg, ex)
+    raise newException(Defect, ex.msg, ex)
 
 template suite*(name, body) =
 
