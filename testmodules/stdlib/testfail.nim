@@ -26,7 +26,7 @@ suite "reports unhandled exception when teardown handles exceptions too":
     teardown:
       try:
         await someAsyncProc()
-      except:
+      except CatchableError:
         discard
 
     test "should fail, but not crash":

@@ -4,14 +4,18 @@ template launderExceptions(body: typed) =
   ## exist in asyncdispatch. We therefore launder all real instances of
   ## Exception into CatchableError and make Chronos happy while not losing
   ## context information for the remainder of the exception types.
+  {.push warning[BareExcept]:off.}
   try:
+    {.push warning[BareExcept]:on.}
     body
+    {.pop.}
   except Defect as ex:
     raise ex
   except CatchableError as ex:
     raise ex
   except Exception as ex:
     raise newException(Defect, ex.msg, ex)
+  {.pop.}
 
 template suite*(name, body) =
 
