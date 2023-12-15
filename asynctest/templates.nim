@@ -23,7 +23,7 @@ template suite*(name, body) =
 
     ## Runs before all tests in the suite
     template setupAll(setupAllBody) {.used.} =
-      let b = proc {.async.} = setupAllBody
+      let b = proc {.async.} = launderExceptions: setupAllBody
       waitFor b()
 
     ## Runs after all tests in the suite
