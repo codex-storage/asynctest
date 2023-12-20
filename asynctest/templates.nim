@@ -20,31 +20,31 @@ template launderExceptions(body: typed) =
 template suite*(name, body) =
 
   suite name:
-
-    ## Runs before all tests in the suite
-    template setupAll(setupAllBody) {.used.} =
-      let b = proc {.async.} = launderExceptions: setupAllBody
-      waitFor b()
-
-    ## Runs after all tests in the suite
-    template teardownAll(teardownAllBody) {.used.} =
-      template teardownAllIMPL: untyped {.inject.} =
-        let a = proc {.async.} = launderExceptions: teardownAllBody
-        waitFor a()
-
-    template setup(setupBody) {.used.} =
-      setup:
-        let asyncproc = proc {.async.} = launderExceptions: setupBody
-        waitFor asyncproc()
-
-    template teardown(teardownBody) {.used.} =
-      teardown:
-        let exception = getCurrentException()
-        let asyncproc = proc {.async.} = launderExceptions: teardownBody
-        waitFor asyncproc()
-        setCurrentException(exception)
-
     let suiteproc = proc = # Avoids GcUnsafe2 warnings with chronos
+
+      ## Runs before all tests in the suite
+      template setupAll(setupAllBody) {.used.} =
+        let b = proc {.async.} = launderExceptions: setupAllBody
+        waitFor b()
+
+      ## Runs after all tests in the suite
+      template teardownAll(teardownAllBody) {.used.} =
+        template teardownAllIMPL: untyped {.inject.} =
+          let a = proc {.async.} = launderExceptions: teardownAllBody
+          waitFor a()
+
+      template setup(setupBody) {.used.} =
+        setup:
+          let asyncproc = proc {.async.} = launderExceptions: setupBody
+          waitFor asyncproc()
+
+      template teardown(teardownBody) {.used.} =
+        teardown:
+          let exception = getCurrentException()
+          let asyncproc = proc {.async.} = launderExceptions: teardownBody
+          waitFor asyncproc()
+          setCurrentException(exception)
+
       body
 
       when declared(teardownAllIMPL):
