@@ -6,7 +6,7 @@ license = "MIT"
 skipDirs = @["testmodules"]
 
 task test, "Runs the test suite":
-  for module in ["stdlib", "chronos", "unittest2"]:
+  for module in ["stdlib", "chronosv3", "unittest2"]:
     withDir "testmodules/" & module:
       delEnv "NIMBLE_DIR" # use nimbledeps dir
       exec "nimble install -d -y"
