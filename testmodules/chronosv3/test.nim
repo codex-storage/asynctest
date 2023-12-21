@@ -1,5 +1,4 @@
-import pkg/asynctest
-import pkg/chronos
+import pkg/asynctest/chronos/unittest
 
-include ../stdlib/testbody
-include ../stdlib/testfail
+include ../common/testbody
+include ../common/testfail
