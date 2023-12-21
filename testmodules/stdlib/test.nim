@@ -1,5 +1,4 @@
-import std/asyncdispatch
-import pkg/asynctest
+import pkg/asynctest/asyncdispatch/unittest
 
-include ./testbody
-include ./testfail
+include ../common/testbody
+include ../common/testfail
