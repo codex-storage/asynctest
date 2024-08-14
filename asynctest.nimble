@@ -1,4 +1,4 @@
-version = "0.5.1"
+version = "0.5.2"
 author = "asynctest Authors"
 description = "Test asynchronous code"
 license = "MIT"
