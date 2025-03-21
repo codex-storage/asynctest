@@ -42,13 +42,13 @@ suite "eventually":
       inc tries
       tries == 3
 
-    check eventually becomesTrue()
+    check eventually(becomesTrue(), pollInterval=10)
 
   test "becomes false after timeout":
 
     proc remainsFalse: bool = false
 
-    check not eventually(remainsFalse(), timeout=100)
+    check not eventually(remainsFalse(), timeout=100, pollInterval=10)
 
   test "becomes true during timeout":
 
@@ -56,7 +56,7 @@ suite "eventually":
       sleep(100)
       true
 
-    check eventually(slowTrue(), timeout=50)
+    check eventually(slowTrue(), timeout=50, pollInterval=10)
 
   test "works with async procedures":
 
@@ -70,5 +70,21 @@ suite "eventually":
       x = 42
 
     let future = slowProcedure()
-    check eventually x == 42
+    check eventually(x == 42, pollInterval=10)
     await future
+
+  test "respects poll interval":
+    var evaluations: int = 0
+
+    # If we try to access this from the closure, it will crash later with
+    # a segfault, so pass as var.
+    proc expensivePredicate(counter: var int): bool =
+      inc counter
+      return false
+
+    check not eventually(evaluations.expensivePredicate(), pollInterval=100, timeout=500)
+    check 1 <= evaluations and evaluations <= 6
+
+    evaluations = 0
+    check not eventually(evaluations.expensivePredicate(), pollInterval=10, timeout=500)
+    check 20 <= evaluations and evaluations <= 51
