@@ -10,7 +10,7 @@ template eventuallyProcSignature(body: untyped): untyped =
     proc eventually: Future[bool] {.async.} =
       body
 
-template eventually*(expression: untyped, timeout=5000): bool =
+template eventually*(expression: untyped, timeout=5000, pollInterval=1000): bool =
   bind Moment, now, milliseconds
 
   eventuallyProcSignature:
@@ -18,7 +18,7 @@ template eventually*(expression: untyped, timeout=5000): bool =
     while not expression:
       if endTime < Moment.now():
         return false
-      await sleepAsync(10.milliseconds)
+      await sleepAsync(pollInterval.milliseconds)
     return true
 
   await eventually()
